@@ -1,4 +1,3 @@
-// Calculator class implementation in JavaScript
 class Calculator {
     constructor() {
         this.currentValue = 0;
@@ -100,14 +99,11 @@ class Calculator {
             return "Error";
         }
         
-        // If the number is an integer, don't show decimal points
         if (Math.floor(this.currentValue) === this.currentValue && !this.hasDecimal) {
             return this.currentValue.toFixed(0);
         } else {
-            // Format with appropriate decimal places
             let result = this.currentValue.toString();
             
-            // Remove trailing zeros after decimal point
             if (result.includes('.')) {
                 result = parseFloat(this.currentValue).toString();
             }
@@ -210,27 +206,20 @@ class Calculator {
     }
 }
 
-// Global variables
 let calculator = new Calculator();
 let operationDisplay = "";
 
-// DOM Elements
 const displayElement = document.getElementById('display');
 const operationDisplayElement = document.getElementById('operation-display');
 
-// Function to update the calculator display
 function updateDisplay() {
-    // Update the main display
     const displayValue = calculator.getDisplayValue();
     displayElement.textContent = displayValue;
     
-    // Update the operation display
     operationDisplayElement.textContent = operationDisplay;
 }
 
-// Setup all event listeners for calculator buttons
 function setupEventListeners() {
-    // Number keys
     for (let i = 0; i <= 9; i++) {
         const button = document.getElementById(`key-${i}`);
         if (button) {
@@ -241,7 +230,6 @@ function setupEventListeners() {
         }
     }
     
-    // Operation keys
     document.getElementById('add').addEventListener('click', () => {
         operationDisplay = calculator.getCurrentValue() + ' +';
         calculator.setOperation("+");
@@ -303,7 +291,6 @@ function setupEventListeners() {
         operationDisplay = operationDisplay + ' ' + calculator.getCurrentValue() + ' =';
         calculator.calculate();
         updateDisplay();
-        // Reset operation display after calculation
         setTimeout(() => {
             operationDisplay = "";
             updateDisplay();
@@ -331,18 +318,15 @@ function setupEventListeners() {
         updateDisplay();
     });
     
-    // Keyboard support
+    // Keyboard
     document.addEventListener('keydown', handleKeyPress);
 }
 
-// Function for handle keyboard input
 function handleKeyPress(event) {
-    // Numbers
     if (/^[0-9]$/.test(event.key)) {
         calculator.addDigit(parseInt(event.key));
         updateDisplay();
     }
-    // Operators
     else if (event.key === '+') {
         operationDisplay = calculator.getCurrentValue() + ' +';
         calculator.setOperation("+");
@@ -363,41 +347,34 @@ function handleKeyPress(event) {
         calculator.setOperation("/");
         updateDisplay();
     }
-    // Decimal
     else if (event.key === '.') {
         calculator.addDecimal();
         updateDisplay();
     }
-    // Enter/equals
     else if (event.key === 'Enter' || event.key === '=') {
         operationDisplay = operationDisplay + ' ' + calculator.getCurrentValue() + ' =';
         calculator.calculate();
         updateDisplay();
-        // Reset operation display after calculation
         setTimeout(() => {
             operationDisplay = "";
             updateDisplay();
         }, 2000);
     }
-    // Backspace for CE
     else if (event.key === 'Backspace') {
         calculator.clearEntry();
         updateDisplay();
     }
-    // Delete or Escape for C
     else if (event.key === 'Delete' || event.key === 'Escape') {
         calculator.clear();
         operationDisplay = "";
         updateDisplay();
     }
-    // Prevent default for keys we're handling
     if (['+', '-', '*', '/', '.', 'Enter', '=', 'Backspace', 'Delete', 'Escape'].includes(event.key) || 
         /^[0-9]$/.test(event.key)) {
         event.preventDefault();
     }
 }
 
-// Initialize calculator
 document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
     setupEventListeners();
