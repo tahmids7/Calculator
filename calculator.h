@@ -46,9 +46,9 @@ public:
     void clearEntry();
     void calculate();
     
-    // Helper functions
+    // Helpers
     bool isInErrorState();
     void resetErrorState();
 };
 
-#endif // CALCULATOR_H
+#endif 
