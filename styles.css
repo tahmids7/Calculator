@@ -143,7 +143,6 @@ body {
     z-index: 1000;
 }
 
-/* Responsive design */
 @media (max-width: 400px) {
     .calculator {
         width: 90%;
